@@ -27,13 +27,9 @@ const movies=[{"Title":"Pokemon 4Ever: Celebi - Voice of the Forest","Year":"200
 ,{"Title":"Minions","Year":"2015","Rated":"PG","Released":"10 Jul 2015","Runtime":"91 min","Genre":"Animation, Adventure, Comedy","Director":"Kyle Balda, Pierre Coffin","Writer":"Brian Lynch","Actors":"Sandra Bullock, Jon Hamm, Michael Keaton","Plot":"Ever since the dawn of time, the Minions have lived to serve the most despicable of masters. From the T-Rex to Napoleon, the easily distracted tribe has helped the biggest and the baddest of villains. Now, join protective leader Kevin, teenage rebel Stuart, and lovable little Bob on a global road trip. They'll earn a shot to work for a new boss, the world's first female supervillain, and try to save all of Minionkind from annihilation.","Language":"English, Spanish","Country":"United States, France","Awards":"Nominated for 1 BAFTA Award4 wins & 29 nominations total","Poster":"https://m.media-amazon.com/images/M/MV5BMTUwNjcxNzAwOF5BMl5BanBnXkFtZTgwNzEzMzIzNDE@._V1_SX300.jpg","Ratings":[{"Source":"Internet Movie Database","Value":"6.4/10"},{"Source":"Rotten Tomatoes","Value":"55%"},{"Source":"Metacritic","Value":"56/100"}],"Metascore":"56","imdbRating":"6.4","imdbVotes":"246,232","imdbID":"tt2293640","Type":"movie","DVD":"08 Dec 2015","BoxOffice":"$336,045,770","Production":"N/A","Website":"N/A","Response":"True"}
 ,{"Title":"Dune","Year":"2021","Rated":"PG-13","Released":"22 Oct 2021","Runtime":"155 min","Genre":"Action, Adventure, Drama","Director":"Denis Villeneuve","Writer":"Jon Spaihts, Denis Villeneuve, Eric Roth","Actors":"Timothée Chalamet, Rebecca Ferguson, Zendaya","Plot":"A mythic and emotionally charged hero's journey, \"Dune\" tells the story of Paul Atreides, a brilliant and gifted young man born into a great destiny beyond his understanding, who must travel to the most dangerous planet in the universe to ensure the future of his family and his people. As malevolent forces explode into conflict over the planet's exclusive supply of the most precious resource in existence-a commodity capable of unlocking humanity's greatest potential-only those who can conquer their fear will survive.","Language":"English, Mandarin","Country":"United States, Canada","Awards":"Won 6 Oscars. 170 wins & 281 nominations total","Poster":"https://m.media-amazon.com/images/M/MV5BN2FjNmEyNWMtYzM0ZS00NjIyLTg5YzYtYThlMGVjNzE1OGViXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg","Ratings":[{"Source":"Internet Movie Database","Value":"8.0/10"},{"Source":"Rotten Tomatoes","Value":"83%"},{"Source":"Metacritic","Value":"74/100"}],"Metascore":"74","imdbRating":"8.0","imdbVotes":"665,392","imdbID":"tt1160419","Type":"movie","DVD":"22 Oct 2021","BoxOffice":"$108,327,830","Production":"N/A","Website":"N/A","Response":"True"}
 ]
-
+router.get('/movies',async(req,res)=>{ res.render('Log_in',{ movies: movies});})
 router.get('/movies',async(req,res)=>{ res.render('index',{ movies: movies});})
 
-router.get("/search",async(req,res)=>{
-    const {title} = req.query;
-    const movie = await Movie.findOne({title:title});
-    res.render('details',{movie:movie});
-})
+
 
 export default router;
