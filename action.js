@@ -37,10 +37,6 @@ router.get('/newGetData',async(req,res)=>{
     });
 })
 
-
-
-
-
 router.get('/getPokeId/:pokeId',async(req,res)=>{
 
     const responseFromServer=await fetch(`https://api.pokemontcg.io/v2/cards/${req.params.pokeId}`,{
