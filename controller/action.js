@@ -30,12 +30,8 @@ const movies=[{"Title":"Pokemon 4Ever: Celebi - Voice of the Forest","Year":"200
 router.get('/movies',async(req,res)=>{ res.render('Log_in',{ movies: movies});})
 router.get('/movies',async(req,res)=>{ res.render('index',{ movies: movies});})
 
-<<<<<<< Updated upstream:controller/action.js
-=======
 router.get('/movies/:name',async(req,res)=>{ const movie = movies.find(c => c.Title === req.params.name); if(!movie) return res.status(404).send('The movie with the given name was not found'); res.render('movie',{ movie: movie});})
 
-
->>>>>>> Stashed changes:action.js
 
 
 export default router;
