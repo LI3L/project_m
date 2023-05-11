@@ -11,12 +11,14 @@
     <center>
         <h1 class="start" >welcome to Liel, Sahar and eliya's Cinema</h1>
         <h2 class="start">please log in to contiue</h2>
-        <input type="text" name="user" placeholder="username" required>
-        <br><br>
-        <input type="password" name="pass" placeholder="password" required>
-        <br>
-        <input type="submit" value="login">
-        <br>
+        <form action="/login" method="POST">
+            <input type="text" name="user" placeholder="username" required>
+            <br><br>
+            <input type="password" name="pass" placeholder="password" required>
+            <br>
+            <input type="submit" value="login">
+            <br>
+        </form>
         <a href="register.html">register</a>
         <a href="home.html">home</a>
     </center>    

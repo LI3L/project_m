@@ -1,7 +1,7 @@
 import express from 'express';
 import action from './controller/action.js';
 import dotenv from "dotenv";
-import database from "./models/database.js";
+import database from "./moudels/database.js";
 dotenv.config();
 
 const app =express();
