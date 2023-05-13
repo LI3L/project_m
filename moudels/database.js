@@ -7,10 +7,10 @@ const connection = new Sequelize(
     process.env.USERNAME,
     process.env.PASSWORD,
     {
-        dialect: process.env.DIALECT,
-        host: process.env.HOST
+        host: process.env.HOST,
+        dialect: process.env.DIALECT
     }
-)
+);
 
 export default connection;
 

@@ -10,7 +10,8 @@ const log_in = database.define('log_ins',{
     },
     userName: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
     } ,
         
     password: {
