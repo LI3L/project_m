@@ -1,5 +1,6 @@
 import  express from "express";
 import LogIn from'../moudels/log_in.js';
+//import bcrypt from "bcryptjs";
 import fetch from "node-fetch";
 const router = express.Router();
 
@@ -29,7 +30,22 @@ const movies=[{"Title":"Pokemon 4Ever: Celebi - Voice of the Forest","Year":"200
 ,{"Title":"Dune","Year":"2021","Rated":"PG-13","Released":"22 Oct 2021","Runtime":"155 min","Genre":"Action, Adventure, Drama","Director":"Denis Villeneuve","Writer":"Jon Spaihts, Denis Villeneuve, Eric Roth","Actors":"Timothée Chalamet, Rebecca Ferguson, Zendaya","Plot":"A mythic and emotionally charged hero's journey, \"Dune\" tells the story of Paul Atreides, a brilliant and gifted young man born into a great destiny beyond his understanding, who must travel to the most dangerous planet in the universe to ensure the future of his family and his people. As malevolent forces explode into conflict over the planet's exclusive supply of the most precious resource in existence-a commodity capable of unlocking humanity's greatest potential-only those who can conquer their fear will survive.","Language":"English, Mandarin","Country":"United States, Canada","Awards":"Won 6 Oscars. 170 wins & 281 nominations total","Poster":"https://m.media-amazon.com/images/M/MV5BN2FjNmEyNWMtYzM0ZS00NjIyLTg5YzYtYThlMGVjNzE1OGViXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg","Ratings":[{"Source":"Internet Movie Database","Value":"8.0/10"},{"Source":"Rotten Tomatoes","Value":"83%"},{"Source":"Metacritic","Value":"74/100"}],"Metascore":"74","imdbRating":"8.0","imdbVotes":"665,392","imdbID":"tt1160419","Type":"movie","DVD":"22 Oct 2021","BoxOffice":"$108,327,830","Production":"N/A","Website":"N/A","Response":"True"}
 ]//replace to log in method
 
-router.get('/',async(req,res)=>{ res.render('index',{ movies: movies});})
+
+
+router.get('/',async(req,res)=>{ 
+   res.render('index',{ movies: movies});
+  //res.render('Log_in');
+
+})
+
+router.get('/Log_in',async(req,res)=>{ 
+  res.render('Log_in');
+
+})
+router.get('/register',async(req,res)=>{ 
+  res.render('register');
+
+})
 
 router.post("/login", async (req, res) => {
     const userName = req.body.user;
@@ -38,14 +54,14 @@ router.post("/login", async (req, res) => {
     try {
       const data = await LogIn.findAll({ where: { userName: userName } });
       if (data.length == 1) {
-        const acc = data[0];
-        const isMatch = await bcrypt.compare(password, acc.password);
+        const pass = data[0];
+        const isMatch = password==pass.password;
         if (isMatch) {
           // Generate token or session data
           // ...
   
           // Render EJS file and send it as the response
-          res.render('/movies',{ movies: movies} );
+          res.redirect("/");
         } else {
           return res.status(400).json({
             message: "Password does not match",
@@ -65,17 +81,16 @@ router.post("/login", async (req, res) => {
   
 
 
-
-// router.get('/movies',async(req,res)=>{ res.render('index',{ movies: movies});})
-
-
 function generateRandomIntegerInRange(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 router.post("/register", async (req, res) => {
   // Get register data
-  const { userName, password, admin } = req.body;
+  const userName = req.body.reg_username;
+  const password = req.body.reg_password;
+  const cof_password= req.body.confirm_password;
+  const admin = req.body.picked;
 
   //Check if user exists
   const data = await LogIn.findAll({ where: { userNume: userName } });
@@ -83,7 +98,8 @@ router.post("/register", async (req, res) => {
     return res.status(200).json({
       message: "Username already exists",
     });
-  } else {
+  } 
+  else {
     // Create a new user
     LogIn
       .create({
@@ -93,10 +109,7 @@ router.post("/register", async (req, res) => {
       })
       .then((user_created) => {
         // Redirect to /movies route
-        return res.status(200).json({
-          message: "Username already exists",
-        });
-        res.redirect("/movies");
+        return res.redirect("/Log_in");
       })
       .catch((err) => {
         return res.status(500).json({

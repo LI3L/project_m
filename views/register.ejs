@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="Project.css">
+    <!-- <link rel="stylesheet" href="Project.css"> -->
     <title>Register</title>
 </head>
 <body>
@@ -18,17 +18,17 @@
             <br><br>
             <input type="password" name="confirm_password" placeholder="Confirm Password" required>
             <div class="radio-container">
-                <input type="radio" id="user" name="picked" value="false">
+                <input type="radio" id="user" name="picked" value= <%false%> >
                 <label for="user">User</label>
-                <input type="radio" id="admin" name="picked" value="true">
+                <input type="radio" id="admin" name="picked" value= <%true%>>
                 <label for="admin">Admin</label>
             </div>
             <br>
-            <input type="submit" value="Register" onclick="register()" >
+            <input type="submit" value="Register" >
             <br>
         </form>
-        <a href="log_in.html">Login</a>
+        <a href="/Log_in">Login</a>
       </center>   
 </body>
-<script src="Mproject.js"></script>
+<!-- <script src="Mproject.js"></script> -->
 </html>
