@@ -61,40 +61,23 @@ router.get('/render_register',async(req,res)=>{
 router.post("/login", async (req, res) => {
     const userName = req.body.user;
     const password = req.body.pass;
-  
     try {
       const data = await LogIn.findAll({ where: { userName: userName } });
-      if (data.length == 1) {
-        const pass = data[0];
-        const isMatch = password==pass.password;
-        if (isMatch) {
-          token=true;
-          user_name=userName;
-          user_password=password;
-          // Generate token or session data
-          // ...
-  
-          // Render EJS file and send it as the response
-          res.redirect("/");
+      const password=await LogIn.findAll({ where: { password: password } });
+      for(let i=0;i<data.length;i++){
+        if(data[i].userName==userName && password[i].password==password){
           return res.status(200).json({
-            message: "Login successful",
-
+            message: "Logged in successfully",
+            return:res.redirect('/')
           });
-        } else {
-          return res.status(400).json({
-            message: "Password does not match",
-          });
-        }
-      } else {
-        return res.status(200).json({
-          message: "User not found",
+        } 
+      }
+    }
+    catch (error) {
+        return res.status(500).json({
+          message: "ERROR FROM SERVER: " + error,
         });
       }
-    } catch (error) {
-      return res.status(500).json({
-        message: "ERROR FROM SERVER: " + error,
-      });
-    }
   });
   
 
@@ -109,32 +92,41 @@ router.post("/register", async (req, res) => {
   const password = req.body.reg_password;
   const cof_password= req.body.confirm_password;
   const admin = req.body.picked;
-
+  // Check if passwords match
+  if (password !== cof_password) {
+    return res.status(400).json({
+      message: "Passwords do not match",
+    });
+  }
   //Check if user exists
   const data = await LogIn.findAll({ where: { userNume: userName } });
-  if (data[0]) {
-    return res.status(200).json({
-      message: "Username already exists",
-    });
-  } 
-  else {
-    // Create a new user
-    LogIn
-      .create({
-        userName: userName,
-        password: password,
-        admin: admin,
-      })
-      .then((user_created) => {
-        // Redirect to /movies route
-        return res.redirect("/Log_in");
-      })
-      .catch((err) => {
-        return res.status(500).json({
-          message: err.message,
-        });
+  for(let i=0;i<data.length;i++){ 
+    if(data[i].userName==userName){
+      return res.status(200).json({
+        message: "Username already exists",
       });
-  }
+    }
+  } 
+  
+  // Create a new user
+  user_name=userName;
+  user_password=password;
+  LogIn
+    .create({
+      userName: userName,
+      password: password,
+      admin: admin,
+    })
+    .then((result) => {
+      console.log(result);
+      return res.redirect("/render_Log_in");
+    })
+    .catch((err) => {
+      return res.status(500).json({
+        message: err.message,
+      });
+    });
+  
 });
 
 export default router;
