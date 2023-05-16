@@ -11,7 +11,7 @@
     <center>
         <h1 class="start">Welcome to Liel and Sahar's Cinema</h1>
         <h2 class="start">Please register to continue</h2>
-        <form action="/register" method="post"></form>
+        <form action="/register" method="post">
             <label class="form-label">name:</label><br>
             <input type="text" name="reg_username" class="Username" placeholder="YOUR NAME"><br>
             <label class="form-label">password:</label><br>
@@ -19,12 +19,12 @@
             <label class="form-label">confirm password:</label><br>
             <input type="text" name="confirm_password" class="Confirm_Password" placeholder="CONFIRM Password"><br>
             <div class="radio-container">
-                <input type="radio" id="user" name="picked" value= <%false%> >
+                <input type="radio" id="user" name="picked" value= "false" >
                 <label for="user">User</label>
-                <input type="radio" id="admin" name="picked" value= <%true%>>
+                <input type="radio" id="admin" name="picked" value="true">
                 <label for="admin">Admin</label>
             </div><br>
-            <button form="add_user_form" type="submit" class="btn btn-primary" style="width: 100px; margin-top: 12px;">Register</button><br>
+            <button type="submit" class="btn btn-primary" style="width: 100px; margin-top: 12px;">Register</button><br>
             
         </form>
         <a href="/render_Log_in">Login</a>
