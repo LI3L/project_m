@@ -4,6 +4,10 @@ import LogIn from'../moudels/log_in.js';
 import fetch from "node-fetch";
 const router = express.Router();
 
+const token=false;
+const user_name = "null";
+const user_password="null";
+
 const movies=[{"Title":"Pokemon 4Ever: Celebi - Voice of the Forest","Year":"2001","Rated":"G","Released":"11 Oct 2002","Runtime":"75 min","Genre":"Animation, Action, Adventure","Director":"Kunihiko Yuyama, Jim Malone","Writer":"Hideki Sonoda, Michael Haigney, Satoshi Tajiri","Actors":"Veronica Taylor, Rica Matsumoto, Rachael Lillis","Plot":"Ash must stop a hunter who forces the mythical Pokémon Celebi to help him destroy a forest.","Language":"Japanese","Country":"Japan","Awards":"N/A","Poster":"https://m.media-amazon.com/images/M/MV5BZDZiYjc3MWYtODE5Mi00MDM5LWFkZTAtNjAzZmUxMzc4ZGQxL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg","Ratings":[{"Source":"Internet Movie Database","Value":"5.7/10"}],"Metascore":"N/A","imdbRating":"5.7","imdbVotes":"8,929","imdbID":"tt0287635","Type":"movie","DVD":"N/A","BoxOffice":"$1,727,447","Production":"N/A","Website":"N/A","Response":"True"}
 ,{"Title":"Ninjago","Year":"2019–2022","Rated":"TV-Y7-FV","Released":"22 Jun 2019","Runtime":"11 min","Genre":"Animation, Action, Adventure","Director":"N/A","Writer":"Tommy Andreasen, Tommy Kalmar, Cerim Manovi","Actors":"Sam Vincent, Michael Adamthwaite, Kelly Metzger","Plot":"While fighting foes across Ninjago City and beyond, the ninja embark on new quests and gain newfound allies as the power of their friendship is tested.","Language":"English, Danish","Country":"Canada, Denmark, United States","Awards":"3 wins & 9 nominations","Poster":"https://m.media-amazon.com/images/M/MV5BYzEyN2QwZjAtNjM2Yy00YWNiLTlkNGQtZjgxMzMxNGMxNzAzXkEyXkFqcGdeQXVyODAzNzI4Njg@._V1_SX300.jpg","Ratings":[{"Source":"Internet Movie Database","Value":"8.0/10"}],"Metascore":"N/A","imdbRating":"8.0","imdbVotes":"1,535","imdbID":"tt10650946","Type":"series","totalSeasons":"4","Response":"True"}
 ,{"Title":"Ralph Breaks the Internet","Year":"2018","Rated":"PG","Released":"23 Nov 2018","Runtime":"112 min","Genre":"Animation, Adventure, Comedy","Director":"Phil Johnston, Rich Moore","Writer":"Phil Johnston, Pamela Ribon, Rich Moore","Actors":"John C. Reilly, Sarah Silverman, Gal Gadot","Plot":"Six years after the events of \"Wreck-It Ralph,\" Ralph and Vanellope, now friends, discover a wi-fi router in their arcade, leading them into a new adventure.","Language":"English","Country":"Japan, United States","Awards":"Nominated for 1 Oscar. 3 wins & 67 nominations total","Poster":"https://m.media-amazon.com/images/M/MV5BMTYyNzEyNDAzOV5BMl5BanBnXkFtZTgwNTk3NDczNjM@._V1_SX300.jpg","Ratings":[{"Source":"Internet Movie Database","Value":"7.0/10"},{"Source":"Rotten Tomatoes","Value":"88%"},{"Source":"Metacritic","Value":"71/100"}],"Metascore":"71","imdbRating":"7.0","imdbVotes":"168,755","imdbID":"tt5848272","Type":"movie","DVD":"12 Feb 2019","BoxOffice":"$201,091,711","Production":"N/A","Website":"N/A","Response":"True"}
@@ -33,16 +37,23 @@ const movies=[{"Title":"Pokemon 4Ever: Celebi - Voice of the Forest","Year":"200
 
 
 router.get('/',async(req,res)=>{ 
-   res.render('index',{ movies: movies});
+  const user = await LogIn.findAll();
+   res.render('index',{ 
+    movies: movies,
+    user: user,
+    token: token,
+    user_name: user,
+    user_password: user_password,
+  });
   //res.render('Log_in');
 
 })
 
-router.get('/Log_in',async(req,res)=>{ 
+router.get('/render_Log_in',async(req,res)=>{ 
   res.render('Log_in');
 
 })
-router.get('/register',async(req,res)=>{ 
+router.get('/render_register',async(req,res)=>{ 
   res.render('register');
 
 })
@@ -57,11 +68,18 @@ router.post("/login", async (req, res) => {
         const pass = data[0];
         const isMatch = password==pass.password;
         if (isMatch) {
+          token=true;
+          user_name=userName;
+          user_password=password;
           // Generate token or session data
           // ...
   
           // Render EJS file and send it as the response
           res.redirect("/");
+          return res.status(200).json({
+            message: "Login successful",
+
+          });
         } else {
           return res.status(400).json({
             message: "Password does not match",
