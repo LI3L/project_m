@@ -9,6 +9,26 @@
     <title>Log in</title>
 </head>
 <body>
+    <nav class="navbar">
+        <a class="navbar-brand" href="/">Cinema</a>
+        <input type="checkbox" id="toggler">
+        <% if(token){%>
+            <div class="user">
+                <p>Hi <%= user%></p>
+                <a href="/logout">Log out</a>
+            </div>
+        <%}%>
+        <label for="toggler"><i class="ri-menu-line"></i></label>
+        <div class="menu">
+            <ul class="list">
+                <li><a href="/">Home</a></li>
+                <%if(!token){%>
+                    <li><a href="/render_Log_in">Log in</a></li>
+                <%}%>
+                <li><a href="#">stam</a></li>
+            </ul>
+        </div>
+    </nav>
     <center>
         <h1 class="start" >welcome to Liel, Sahar and eliya's Cinema</h1>
         <h2 class="start">please log in to contiue</h2>
