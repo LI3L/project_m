@@ -37,21 +37,6 @@ const movies=[{"Title":"Pokemon 4Ever: Celebi - Voice of the Forest","Year":"200
 ]//replace to log in method
 
 
-
-// router.get('/',async(req,res)=>{ 
-//   const user = await LogIn.findAll();
-//    res.render('index',{ 
-//     movies: movies,
-//     user: user,
-//     token: token,
-//     user_name: user,
-//     user_password: user_password,
-//   });
-//   //res.render('Log_in');
-
-// })
-
-
 router.get('/render_Log_in',async(req,res)=>{ 
   res.render('Log_in');
 
@@ -67,92 +52,6 @@ router.get('/logout',async(req,res)=>{
   token=false;
   res.redirect('/');
 })
-
-// router.post("/login", async (req, res) => {
-
-//   debugger;
-//   const userName = req.body.log_username;
-//   const his_password = req.body.log_password;
-//   try {
-//     const data = await LogIn.findAll({ where: { userName: userName } });
-//     const data_password=await LogIn.findAll({ where: { password: his_password } });
-//     for(let i=0;i<data.length;i++){
-//       if(data[i].userName==userName && data_password[i].password==his_password){
-//         user_name=userName;
-//         user_password=his_password;
-//         token=data[i].admin;
-//         res.status(200).json({
-//           message: "Logged in successfully",
-//           return:res.redirect('/')
-//         });
-//       } 
-//     }
-//     return res.status(400).json({
-//       message: "Username or password is incorrect",
-//       return:res.redirect('/render_Log_in')
-//     });
-//   }
-//   catch (error) {
-//       return res.status(500).json({
-//         message: "ERROR FROM SERVER: " + error,
-//       });
-//     }
-//   });
-  
-
-
-// function generateRandomIntegerInRange(min, max) {
-//     return Math.floor(Math.random() * (max - min + 1)) + min;
-// }
-
-// router.post("/register", async (req, res) => {
-//   // Get register data  
-//   debugger;
-
-//   const userName = req.body.reg_username;
-//   const password = req.body.reg_password;
-//   const cof_password= req.body.confirm_password;
-//   const admin = req.body.picked;
-//   // Check if passwords match
-//   if (password !== cof_password) {
-//     return res.status(400).json({
-//       message: "Passwords do not match",
-//     });
-//   }
-//   //Check if user exists
-//   const data = await LogIn.findAll({ where: { userName: userName } });
-//   for(let i=0;i<data.length;i++){ 
-//     if(data[i].userName==userName){
-//       return res.status(200).json({
-//         message: "Username already exists",
-//       });
-//     }
-//   } 
-  
-//   // Create a new user
-//   user_name=userName;
-//   user_password=password;
-//   user_id+=1;
-//   LogIn
-//     .create({
-//       id: user_id,
-//       userName: userName,
-//       password: password,
-//       admin: admin,
-//     })
-//     .then((result) => {
-//       console.log(result);
-//       return res.redirect("/render_Log_in");
-//     })
-//     .catch((err) => {
-//       return res.status(500).json({
-//         message: err.message,
-//       });
-//     });
-  
-// });
-
-// export default router;
 
 router.get('/', async (req, res) => {
   const user = await LogIn.findAll();
@@ -190,8 +89,6 @@ router.post("/login", async (req, res) => {
     });
   }
 });
-
-// ...
 
 router.post("/register", async (req, res) => {
   debugger;
