@@ -8,6 +8,7 @@ let user_name = "null";
 let user_password="null";
 let user_id=0;
 let admin=false;
+let err = false;
 
 const movies=[{"Title":"Pokemon 4 Ever: Celebi - Voice of the Forest","Year":"2001","Rated":"G","Released":"11 Oct 2002","Runtime":"75 min","Genre":"Animation, Action, Adventure","Director":"Kunihiko Yuyama, Jim Malone","Writer":"Hideki Sonoda, Michael Haigney, Satoshi Tajiri","Actors":"Veronica Taylor, Rica Matsumoto, Rachael Lillis","Plot":"Ash must stop a hunter who forces the mythical Pokémon Celebi to help him destroy a forest.","Language":"Japanese","Country":"Japan","Awards":"N/A","Poster":"https://m.media-amazon.com/images/M/MV5BZDZiYjc3MWYtODE5Mi00MDM5LWFkZTAtNjAzZmUxMzc4ZGQxL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg","Ratings":[{"Source":"Internet Movie Database","Value":"5.7/10"}],"Metascore":"N/A","imdbRating":"5.7","imdbVotes":"8,929","imdbID":"tt0287635","Type":"movie","DVD":"N/A","BoxOffice":"$1,727,447","Production":"N/A","Website":"N/A","Response":"True"}
 ,{"Title":"Ninjago","Year":"2019–2022","Rated":"TV-Y7-FV","Released":"22 Jun 2019","Runtime":"11 min","Genre":"Animation, Action, Adventure","Director":"N/A","Writer":"Tommy Andreasen, Tommy Kalmar, Cerim Manovi","Actors":"Sam Vincent, Michael Adamthwaite, Kelly Metzger","Plot":"While fighting foes across Ninjago City and beyond, the ninja embark on new quests and gain newfound allies as the power of their friendship is tested.","Language":"English, Danish","Country":"Canada, Denmark, United States","Awards":"3 wins & 9 nominations","Poster":"https://m.media-amazon.com/images/M/MV5BYzEyN2QwZjAtNjM2Yy00YWNiLTlkNGQtZjgxMzMxNGMxNzAzXkEyXkFqcGdeQXVyODAzNzI4Njg@._V1_SX300.jpg","Ratings":[{"Source":"Internet Movie Database","Value":"8.0/10"}],"Metascore":"N/A","imdbRating":"8.0","imdbVotes":"1,535","imdbID":"tt10650946","Type":"series","totalSeasons":"4","Response":"True"}
@@ -112,18 +113,14 @@ router.post("/register", async (req, res) => {
 
   // Check if passwords match
   if (password !== cof_password) {
-    return res.status(400).json({
-      message: "Passwords do not match",
-    });
+    err = "Passwords do not match"
   }
 
   // Check if user exists
   const data = await LogIn.findAll({ where: { userName: userName } });
   for (let i = 0; i < data.length; i++) {
     if (data[i].userName == userName) {
-      return res.status(200).json({
-        message: "Username already exists",
-      });
+      err = "Username already exists"
     }
   }
 
@@ -139,7 +136,7 @@ router.post("/register", async (req, res) => {
   })
     .then((result) => {
       console.log(result);
-      res.redirect("/render_Log_in");
+      res.redirect('/render_Log_in');
     })
     .catch((err) => {
       return res.status(500).json({
@@ -147,6 +144,7 @@ router.post("/register", async (req, res) => {
       });
     });
 });
+
 
 router.get("/order", async (req, res) => {
   const user = await LogIn.findAll();
