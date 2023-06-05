@@ -37,11 +37,21 @@ const movies=[{"Title":"Pokemon 4 Ever: Celebi - Voice of the Forest","Year":"20
 
 
 router.get('/render_Log_in',async(req,res)=>{ 
-  res.render('Log_in');
+  res.render("Log_in", {
+    pageTitle: "Log in",
+    nav1: "Home",
+    nav2: "Register",
+    link: "/render_register",
+  });
 
 })
 router.get('/render_register',async(req,res)=>{ 
-  res.render('register');
+  res.render("register", {
+    pageTitle: "register",
+    nav1: "Home",
+    nav2: "Log in",
+    link: "/render_Log_in",
+  });
 
 })
 
@@ -54,11 +64,15 @@ router.get('/logout',async(req,res)=>{
 
 router.get('/', async (req, res) => {
   const user = await LogIn.findAll();
-  res.render('index', {
+  res.render("index", {
     movies: movies,
     user: user_name,
     token: token,
     admin: admin,
+    pageTitle: "Home",
+    nav1: "Home",
+    nav2: "Log in",
+    link: "/render_Log_in",
   });
 });
 
