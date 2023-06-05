@@ -114,11 +114,11 @@
     <div class ="container-fluid">
         <div class="row">
             <%if(movies.length > 0 ){%>
-                    <% for (let i=0;i<movies.length;i++){%>
+                    <% for (let movie of movies){%>
                         <div class="movie col-lg-3">
-                             <button id= "<%=i %>" class="movie-img-top" action="/order" ><img calss="img" src="<%= movies[i].Poster%>"></button>
+                             <a class="movie-img-top" href="/order/<%=movie.id%>"><img calss="img" src="<%= movie.Poster%>"></a>
                             <div class="movie-body">
-                              <h5 class="movie-title"><%= movies[i].Title%></h5>
+                              <h5 class="movie-title"><%= movie.Title%></h5>
                             </div>
                         </div>
                     <%}%>

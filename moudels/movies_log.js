@@ -1,47 +1,35 @@
 import Sequelize from "sequelize";
 import database from  './database.js';
 
-const log_in = database.define('movies',{
+const movies = database.define('movies',{
     id: {
         type: Sequelize.INTEGER,
         autoIncerement: true,
         allowNull: false,
         primaryKey: true
     },
-    movie_title: {
+    title: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true
     } ,
-    movie_year: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-    },
-    rate: {
+    date: {
         type: Sequelize.STRING,
         allowNull: false
     },
-    movie_genre: {
+    genre: {
         type: Sequelize.STRING,
         allowNull: false
     },
     time: { 
-        type: Sequelize.DATE,
-        allowNull: false
-    },
-    diractor: { 
         type: Sequelize.STRING,
         allowNull: false
     },
-    actors: {
+    description: {
         type: Sequelize.STRING,
         allowNull: false
     },
-    movie_description: {
-        type: Sequelize.STRING,
-        allowNull: false
-    },
-    movie_image: {
+    image: {
         type: Sequelize.STRING,
         allowNull: false
     },
