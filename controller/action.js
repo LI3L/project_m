@@ -136,12 +136,13 @@ router.post("/register", async (req, res) => {
 
 router.get("/order", async (req, res) => {
   const user = await LogIn.findAll();
-  const movie_id = 
+  const movie_id = this.id;
   res.render("order", {
     movies: movies,
     user: user_name,
     token: token,
     admin: admin,
+    movie_id: movie_id,
   });
 });
 

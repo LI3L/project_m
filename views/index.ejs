@@ -116,7 +116,7 @@
             <%if(movies.length > 0 ){%>
                     <% for (let i=0;i<movies.length;i++){%>
                         <div class="movie col-lg-3">
-                             <button id= "<%=i %>" class="movie-img-top" ><img calss="img" src="<%= movies[i].Poster%>"></button>
+                             <button id= "<%=i %>" class="movie-img-top" action="/order" ><img calss="img" src="<%= movies[i].Poster%>"></button>
                             <div class="movie-body">
                               <h5 class="movie-title"><%= movies[i].Title%></h5>
                             </div>
