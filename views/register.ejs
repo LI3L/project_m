@@ -94,6 +94,9 @@
         <h1 class="start">Welcome to Liel and Sahar's Cinema</h1>
         <h2 class="start">Please register to continue</h2>
         <form action="/register" method="post">
+            <% if (err!= false){%>
+                <h1 color="red"> <%= err %> </h1>
+            <%}%>
             <label class="form-label">name:</label><br>
             <input type="text" name="reg_username" class="Username" placeholder="YOUR NAME"><br>
             <label class="form-label">password:</label><br>
