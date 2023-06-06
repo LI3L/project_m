@@ -50,14 +50,13 @@ router.get('/render_register',async(req,res)=>{
 
 router.get('/logout',async(req,res)=>{
   user_name='';
-  user_password='';
   token=false;
   res.redirect('/');
 })
 
 router.get('/', async (req, res) => {
   // for (let i=0;i<movies1.length;i++){
-  //   movies.create({
+  //   Movies.create({
   //     id: i,
   //     title: movies1[i].Title,
   //     genre: movies1[i].Genre,
@@ -65,6 +64,7 @@ router.get('/', async (req, res) => {
   //     date: movies1[i].Year,
   //     image: movies1[i].Poster,
   //     description: movies1[i].Plot,
+  //     sits: 30,
   //   }).then((movie) => {
   //     console.log(movie);
   //   }
@@ -101,7 +101,6 @@ router.post("/login", async (req, res) => {
     for (let i = 0; i < data.length; i++) {
       if (data[i].userName == userName && data_password[i].password == his_password) {
         user_name = data[i].userName;
-        user_password = data_password[i].password;
         admin = data[i].admin;
         token = true;
         res.redirect('/');
@@ -140,7 +139,6 @@ router.post("/register", async (req, res) => {
 
   // Create a new user
   user_name = userName;
-  user_password = password;
   user_id += 1;
   LogIn.create({
     id: user_id,
