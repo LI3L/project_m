@@ -116,9 +116,9 @@
             <%if(movies.length > 0 ){%>
                     <% for (let movie of movies){%>
                         <div class="movie col-lg-3">
-                             <a class="movie-img-top" href="/order/<%=movie.id%>"><img calss="img" src="<%= movie.Poster%>"></a>
+                             <a class="movie-img-top" href="/orders/<%=movie.id%>"><img calss="img" src="<%= movie.image%>"></a>
                             <div class="movie-body">
-                              <h5 class="movie-title"><%= movie.Title%></h5>
+                              <h5 class="movie-title"><%= movie.title%></h5>
                             </div>
                         </div>
                     <%}%>
