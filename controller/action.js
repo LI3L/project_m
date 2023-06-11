@@ -196,12 +196,15 @@ router.post("/register", async (req, res) => {
 
 router.get("/order", async (req, res) => {
   const user = await LogIn.findAll();
-  const movie_id = 
-  res.render("order", {
+  const movie_id = res.render("order", {
     movies: movies,
     user: user_name,
     token: token,
     admin: admin,
+    pageTitle: "register",
+    nav1: "Home",
+    nav2: "0",
+    link: "/0",
   });
 });
 
