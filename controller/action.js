@@ -205,6 +205,7 @@ router.get("/order/:id/:user", async (req, res) => {
     user: user,
     token: token,
     admin: admin,
+    pageTitle: "Order",
     nav1: "Home",
     nav2: "0",
     link: "0",
