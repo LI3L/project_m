@@ -132,7 +132,6 @@ router.post("/login", async (req, res) => {
     for (let i = 0; i < data.length; i++) {
       if (data[i].userName == userName && data_password[i].password == his_password) {
         user_name = data[i].userName;
-        user_password = data_password[i].password;
         admin = data[i].admin;
         token = true;
         res.redirect('/');
@@ -159,6 +158,7 @@ router.post("/register", async (req, res) => {
   verifyPassword(password);
   if (password !== cof_password) {// Check if passwords match
     err = "Passwords do not match"
+    res.redirect('/render_register');
   }
   
 
@@ -167,12 +167,13 @@ router.post("/register", async (req, res) => {
   for (let i = 0; i < data.length; i++) {
     if (data[i].userName == userName) {
       err = "Username already exists"
+      res.redirect('/render_register');
     }
   }
 
   // Create a new user
+  err=false;
   user_name = userName;
-  user_password = password;
   user_id += 1;
   LogIn.create({
     id: user_id,
@@ -184,9 +185,9 @@ router.post("/register", async (req, res) => {
       console.log(result);
       res.redirect('/render_Log_in');
     })
-    .catch((err) => {
+    .catch((error) => {
       return res.status(500).json({
-        message: err.message,
+        message: error.message,
       });
     });
 });
