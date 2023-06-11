@@ -1,18 +1,7 @@
 <%- include("./components/header.ejs") %>
 <%- include("./components/style.ejs") %>
 <body>
-    <nav class="navbar">
-        <a class="navbar-brand" href="/">Cinema</a>
-        <input type="checkbox" id="toggler">
-        <label for="toggler"><i class="ri-menu-line"></i></label>
-        <div class="menu">
-            <ul class="list">
-                <li><a href="/">Home</a></li>
-                <li><a href="/render_Log_in">Log in</a></li>
-                <li><a href="#">stam</a></li>
-            </ul>
-        </div>
-    </nav>
+    <%- include("./components/nav.ejs") %>
     <center>
         <h1 class="start">Welcome to Liel and Sahar's Cinema</h1>
         <h2 class="start">Please register to continue</h2>
@@ -35,7 +24,6 @@
             <button type="submit" class="btn btn-primary" style="width: 100px; margin-top: 12px;">Register</button><br>
             
         </form>
-        <a href="/render_Log_in">Login</a>
       </center>   
 </body>
 <!-- <script src="Mproject.js"></script> -->

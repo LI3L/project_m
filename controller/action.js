@@ -1,5 +1,6 @@
 import  express from "express";
 import LogIn from'../moudels/log_in.js';
+import Movies from "../moudels/movies_log.js";
 import fetch from "node-fetch";
 const router = express.Router();
 
@@ -9,7 +10,7 @@ let user_id=0;
 let admin=false;
 let err = false;
 
-const movies=[{"Title":"Pokemon 4 Ever: Celebi - Voice of the Forest","Year":"2001","Rated":"G","Released":"11 Oct 2002","Runtime":"75 min","Genre":"Animation, Action, Adventure","Director":"Kunihiko Yuyama, Jim Malone","Writer":"Hideki Sonoda, Michael Haigney, Satoshi Tajiri","Actors":"Veronica Taylor, Rica Matsumoto, Rachael Lillis","Plot":"Ash must stop a hunter who forces the mythical Pokémon Celebi to help him destroy a forest.","Language":"Japanese","Country":"Japan","Awards":"N/A","Poster":"https://m.media-amazon.com/images/M/MV5BZDZiYjc3MWYtODE5Mi00MDM5LWFkZTAtNjAzZmUxMzc4ZGQxL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg","Ratings":[{"Source":"Internet Movie Database","Value":"5.7/10"}],"Metascore":"N/A","imdbRating":"5.7","imdbVotes":"8,929","imdbID":"tt0287635","Type":"movie","DVD":"N/A","BoxOffice":"$1,727,447","Production":"N/A","Website":"N/A","Response":"True"}
+const movies1=[{"Title":"Pokemon 4 Ever: Celebi - Voice of the Forest","Year":"2001","Rated":"G","Released":"11 Oct 2002","Runtime":"75 min","Genre":"Animation, Action, Adventure","Director":"Kunihiko Yuyama, Jim Malone","Writer":"Hideki Sonoda, Michael Haigney, Satoshi Tajiri","Actors":"Veronica Taylor, Rica Matsumoto, Rachael Lillis","Plot":"Ash must stop a hunter who forces the mythical Pokémon Celebi to help him destroy a forest.","Language":"Japanese","Country":"Japan","Awards":"N/A","Poster":"https://m.media-amazon.com/images/M/MV5BZDZiYjc3MWYtODE5Mi00MDM5LWFkZTAtNjAzZmUxMzc4ZGQxL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg","Ratings":[{"Source":"Internet Movie Database","Value":"5.7/10"}],"Metascore":"N/A","imdbRating":"5.7","imdbVotes":"8,929","imdbID":"tt0287635","Type":"movie","DVD":"N/A","BoxOffice":"$1,727,447","Production":"N/A","Website":"N/A","Response":"True"}
 ,{"Title":"Ninjago","Year":"2019–2022","Rated":"TV-Y7-FV","Released":"22 Jun 2019","Runtime":"11 min","Genre":"Animation, Action, Adventure","Director":"N/A","Writer":"Tommy Andreasen, Tommy Kalmar, Cerim Manovi","Actors":"Sam Vincent, Michael Adamthwaite, Kelly Metzger","Plot":"While fighting foes across Ninjago City and beyond, the ninja embark on new quests and gain newfound allies as the power of their friendship is tested.","Language":"English, Danish","Country":"Canada, Denmark, United States","Awards":"3 wins & 9 nominations","Poster":"https://m.media-amazon.com/images/M/MV5BYzEyN2QwZjAtNjM2Yy00YWNiLTlkNGQtZjgxMzMxNGMxNzAzXkEyXkFqcGdeQXVyODAzNzI4Njg@._V1_SX300.jpg","Ratings":[{"Source":"Internet Movie Database","Value":"8.0/10"}],"Metascore":"N/A","imdbRating":"8.0","imdbVotes":"1,535","imdbID":"tt10650946","Type":"series","totalSeasons":"4","Response":"True"}
 ,{"Title":"Ralph Breaks the Internet","Year":"2018","Rated":"PG","Released":"23 Nov 2018","Runtime":"112 min","Genre":"Animation, Adventure, Comedy","Director":"Phil Johnston, Rich Moore","Writer":"Phil Johnston, Pamela Ribon, Rich Moore","Actors":"John C. Reilly, Sarah Silverman, Gal Gadot","Plot":"Six years after the events of \"Wreck-It Ralph,\" Ralph and Vanellope, now friends, discover a wi-fi router in their arcade, leading them into a new adventure.","Language":"English","Country":"Japan, United States","Awards":"Nominated for 1 Oscar. 3 wins & 67 nominations total","Poster":"https://m.media-amazon.com/images/M/MV5BMTYyNzEyNDAzOV5BMl5BanBnXkFtZTgwNTk3NDczNjM@._V1_SX300.jpg","Ratings":[{"Source":"Internet Movie Database","Value":"7.0/10"},{"Source":"Rotten Tomatoes","Value":"88%"},{"Source":"Metacritic","Value":"71/100"}],"Metascore":"71","imdbRating":"7.0","imdbVotes":"168,755","imdbID":"tt5848272","Type":"movie","DVD":"12 Feb 2019","BoxOffice":"$201,091,711","Production":"N/A","Website":"N/A","Response":"True"}
 ,{"Title":"John Dies at the End","Year":"2012","Rated":"R","Released":"27 Dec 2012","Runtime":"99 min","Genre":"Comedy, Fantasy, Horror","Director":"Don Coscarelli","Writer":"Don Coscarelli, David Wong","Actors":"Chase Williamson, Rob Mayes, Paul Giamatti","Plot":"A new street drug that sends its users across time and dimensions has one drawback: some people return no longer human. Can two college drop-outs save humanity from this silent, otherworldly invasion?","Language":"English","Country":"United States","Awards":"2 wins & 6 nominations","Poster":"https://m.media-amazon.com/images/M/MV5BMTUyNzIyNzc0MV5BMl5BanBnXkFtZTcwOTM5ODg1OA@@._V1_SX300.jpg","Ratings":[{"Source":"Internet Movie Database","Value":"6.3/10"},{"Source":"Rotten Tomatoes","Value":"60%"},{"Source":"Metacritic","Value":"53/100"}],"Metascore":"53","imdbRating":"6.3","imdbVotes":"39,369","imdbID":"tt1783732","Type":"movie","DVD":"02 Apr 2013","BoxOffice":"$141,951","Production":"N/A","Website":"N/A","Response":"True"},{"Title":"Avatar: The Way of Water","Year":"2022","Rated":"PG-13","Released":"16 Dec 2022","Runtime":"192 min","Genre":"Action, Adventure, Fantasy","Director":"James Cameron","Writer":"James Cameron, Rick Jaffa, Amanda Silver","Actors":"Sam Worthington, Zoe Saldana, Sigourney Weaver","Plot":"Jake Sully lives with his newfound family formed on the extrasolar moon Pandora. Once a familiar threat returns to finish what was previously started, Jake must work with Neytiri and the army of the Na'vi race to protect their home.","Language":"English","Country":"United States","Awards":"Won 1 Oscar. 62 wins & 129 nominations total","Poster":"https://m.media-amazon.com/images/M/MV5BYjhiNjBlODctY2ZiOC00YjVlLWFlNzAtNTVhNzM1YjI1NzMxXkEyXkFqcGdeQXVyMjQxNTE1MDA@._V1_SX300.jpg","Ratings":[{"Source":"Internet Movie Database","Value":"7.7/10"},{"Source":"Rotten Tomatoes","Value":"76%"},{"Source":"Metacritic","Value":"67/100"}],"Metascore":"67","imdbRating":"7.7","imdbVotes":"371,857","imdbID":"tt1630029","Type":"movie","DVD":"28 Mar 2023","BoxOffice":"$683,985,847","Production":"N/A","Website":"N/A","Response":"True"}
@@ -42,17 +43,76 @@ router.get('/render_Log_in',async(req,res)=>{
     nav1: "Home",
     nav2: "Register",
     link: "/render_register",
-  });
+  })});
+router.get("/", async (req, res) => {
+  // for (let i=0;i<movies1.length;i++){
+  //   Movies.create({
+  //     //id: i,
+  //     title: movies1[i].Title,
+  //     genre: movies1[i].Genre,
+  //     time: movies1[i].Runtime,
+  //     date: movies1[i].Year,
+  //     image: movies1[i].Poster,
+  //     description: movies1[i].Plot,
+  //     sits: 30,
+  //   })
+  //     .then((movie) => {
+  //       console.log(movie);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err + "liel");
+  //     });
+  //   }
+    Movies.findAll()
+    .then((movies) => {
+      res.render("index", {
+        movies: movies,
+        user: user_name,
+        token: token,
+        admin: admin,
+        pageTitle: "Home",
+        nav1: "Home",
+        nav2: "Log in",
+        link: "/render_Log_in",
+      });
+    })
+    .catch((err) => {
+      res.render("index", {
+        movies: [],
+        user: user_name,
+        token: token,
+        admin: admin,
+        pageTitle: "Home",
+        nav1: "Home",
+        nav2: "Log in",
+        link: "/render_Log_in",
+      });
+    });
+});
+// router.get('/', async (req, res) => {
+//   const user = await LogIn.findAll();
+//   res.render("index", {
+//     movies: movies,
+//     user: user_name,
+//     token: token,
+//     admin: admin,
+//     pageTitle: "Home",
+//     nav1: "Home",
+//     nav2: "Log in",
+//     link: "/render_Log_in",
+//   });
+// });
 
-})
+
 router.get('/render_register',async(req,res)=>{ 
   res.render("register", {
     pageTitle: "register",
     nav1: "Home",
     nav2: "Log in",
     link: "/render_Log_in",
+    err: err
   });
-
+  
 })
 
 router.get('/logout',async(req,res)=>{
@@ -61,19 +121,6 @@ router.get('/logout',async(req,res)=>{
   res.redirect('/');
 })
 
-router.get('/', async (req, res) => {
-  const user = await LogIn.findAll();
-  res.render("index", {
-    movies: movies,
-    user: user_name,
-    token: token,
-    admin: admin,
-    pageTitle: "Home",
-    nav1: "Home",
-    nav2: "Log in",
-    link: "/render_Log_in",
-  });
-});
 
 router.post("/login", async (req, res) => {
   debugger;
@@ -109,7 +156,7 @@ router.post("/register", async (req, res) => {
   const cof_password = req.body.confirm_password;
   const admin = req.body.picked;
 
-  verifyPassword();
+  verifyPassword(password);
   if (password !== cof_password) {// Check if passwords match
     err = "Passwords do not match"
   }

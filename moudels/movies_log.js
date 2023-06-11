@@ -4,7 +4,7 @@ import database from  './database.js';
 const movies = database.define('movies',{
     id: {
         type: Sequelize.INTEGER,
-        autoIncerement: true,
+        autoIncreasement: true,
         allowNull: false,
         primaryKey: true
     },
