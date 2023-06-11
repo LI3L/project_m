@@ -2,6 +2,7 @@ import  express from "express";
 import LogIn from'../moudels/log_in.js';
 import Movies from "../moudels/movies_log.js";
 import fetch from "node-fetch";
+import { render } from "ejs";
 const router = express.Router();
 
 let token=false;
@@ -132,7 +133,6 @@ router.post("/login", async (req, res) => {
     for (let i = 0; i < data.length; i++) {
       if (data[i].userName == userName && data_password[i].password == his_password) {
         user_name = data[i].userName;
-        user_password = data_password[i].password;
         admin = data[i].admin;
         token = true;
         res.redirect('/');
@@ -156,9 +156,10 @@ router.post("/register", async (req, res) => {
   const cof_password = req.body.confirm_password;
   const admin = req.body.picked;
 
-  verifyPassword(password);
+  if(verifyPassword(password))res.redirect("/render_register");
   if (password !== cof_password) {// Check if passwords match
     err = "Passwords do not match"
+    res.redirect("/render_register");
   }
   
 
@@ -172,7 +173,6 @@ router.post("/register", async (req, res) => {
 
   // Create a new user
   user_name = userName;
-  user_password = password;
   user_id += 1;
   LogIn.create({
     id: user_id,

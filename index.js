@@ -16,7 +16,7 @@ app.use("/",action);
 database
 .sync()
 .then(result=>{
-    console.log(result);
+    //console.log(result);
     app.listen(process.env.PORT,()=>
     console.log(`Server running on port ${process.env.PORT}`));
 })
