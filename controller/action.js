@@ -5,7 +5,6 @@ const router = express.Router();
 
 let token=false;
 let user_name = "null";
-let user_password="null";
 let user_id=0;
 let admin=false;
 let err = false;
@@ -58,7 +57,6 @@ router.get('/render_register',async(req,res)=>{
 
 router.get('/logout',async(req,res)=>{
   user_name='';
-  user_password='';
   token=false;
   res.redirect('/');
 })
@@ -111,10 +109,11 @@ router.post("/register", async (req, res) => {
   const cof_password = req.body.confirm_password;
   const admin = req.body.picked;
 
-  // Check if passwords match
-  if (password !== cof_password) {
+  verifyPassword();
+  if (password !== cof_password) {// Check if passwords match
     err = "Passwords do not match"
   }
+  
 
   // Check if user exists
   const data = await LogIn.findAll({ where: { userName: userName } });
@@ -156,6 +155,23 @@ router.get("/order", async (req, res) => {
     admin: admin,
   });
 });
+
+function verifyPassword(password) {
+  if (password.length < 8) {
+    err="The password must have at least 8 digits";
+    return false;// Check password length
+  }
+  if (!/[A-Z]/.test(password)){
+    err="The password must have at least one uppercase letter";
+    return false; // Check for at least one uppercase letter
+  }
+  if (!/\d/.test(password)) {
+    err="The password must have at least one number";
+    return false;// Check for at least one number
+  }
+  return true; // Password meets all the requirements
+}
+
 
 
 export default router;
