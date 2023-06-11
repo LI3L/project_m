@@ -156,7 +156,7 @@ router.post("/register", async (req, res) => {
   const cof_password = req.body.confirm_password;
   const admin = req.body.picked;
 
-  if(verifyPassword(password))res.redirect("/render_register");
+  if(!verifyPassword(password))res.redirect('/render_register');
   if (password !== cof_password) {// Check if passwords match
     err = "Passwords do not match"
     res.redirect('/render_register');
