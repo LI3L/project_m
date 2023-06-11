@@ -55,6 +55,7 @@ router.get('/logout',async(req,res)=>{
 })
 
 router.get('/', async (req, res) => {
+  
   // for (let i=0;i<movies1.length;i++){
   //   Movies.create({
   //     id: i,
