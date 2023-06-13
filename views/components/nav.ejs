@@ -18,6 +18,9 @@
             <%if(((pageTitle!="Home"&& pageTitle!="Order") || !token)&&nav2!="0"){%>
                 <li><a href="<%= link %>"><%= nav2 %></a></li>
             <%}%>
+            <%if(pageTitle=="Order" && token){%>
+                <li><a href="/reset_sits">reset</a></li>
+            <%}%>
         </ul>
     </div>
 </nav>
