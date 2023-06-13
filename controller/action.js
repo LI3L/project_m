@@ -274,6 +274,13 @@ function verifyPassword(password) {
   return true; // Password meets all the requirements
 }
 
-
+router.get("/reset_sits", async (req, res) => {
+  const movies = await Movies.findByPk(movie_id);
+  movies.update({ 
+    sits: 30,
+    taken: "-1,"
+   });
+  res.redirect("/");
+});
 
 export default router;
