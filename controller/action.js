@@ -122,7 +122,7 @@ router.get('/render_register',async(req,res)=>{
 })
 
 router.get('/logout',async(req,res)=>{
-  user_name='';
+  user_name='null';
   token=false;
   res.redirect('/');
 })
@@ -200,7 +200,7 @@ router.post("/register", async (req, res) => {
 
 
 router.get("/order/:id/:user", async (req, res) => {
-  console.log(admin+"------------------------------------------");
+  //console.log(admin+"------------------------------------------");
   const user =await LogIn.findByPk(req.params.user);
   const id = req.params.id;
   movie_id=id;
@@ -239,19 +239,18 @@ router.get("/getorder/:picks",async(req,res)=>{
     res.redirect("/");
   }
 })
-router.post("/add_char/:id",async(req,res)=>{
-  const id = req.params.id;
-    m=await Movies.findByPk(id);
-    s=m.sits+1;
-    m.update({ sits: s})
-    res.redirect("/order/"+id+"/"+user_name);
-})
-router.post("/remove_char/:id", async (req, res) => {
-  const id = req.params.id;
-  m = await Movies.findByPk(id);
-  s = m.sits -1;
+router.get("/add_chair", async (req, res) => {
+  let m = await Movies.findByPk(movie_id);
+  let s = m.sits + 1;
   m.update({ sits: s });
-  res.redirect("/order/" + id + "/" + user_name);
+  res.redirect("/order/" + movie_id + "/" + user_name);
+});
+router.get("/remove_chair", async (req, res) => {
+  console.log(movie_id+"------------------------------------");
+  let m = await Movies.findByPk(movie_id)
+  let s = m.sits -1;
+  m.update({ sits: s });
+  res.redirect("/order/" + movie_id + "/" + user_name);
 });
 
 function verifyPassword(password) {
