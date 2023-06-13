@@ -95,19 +95,7 @@ router.get("/", async (req, res) => {
       });
     });
 });
-// router.get('/', async (req, res) => {
-//   const user = await LogIn.findAll();
-//   res.render("index", {
-//     movies: movies,
-//     user: user_name,
-//     token: token,
-//     admin: admin,
-//     pageTitle: "Home",
-//     nav1: "Home",
-//     nav2: "Log in",
-//     link: "/render_Log_in",
-//   });
-// });
+
 
 
 router.get('/render_register',async(req,res)=>{ 
@@ -140,8 +128,7 @@ router.post("/login", async (req, res) => {
         user_name = data[i].userName;
         admin = data[i].admin;
         token = true;
-        res.redirect('/');
-        return;
+        return res.redirect("/");
       }
     }
     res.status(400).json({
@@ -161,10 +148,10 @@ router.post("/register", async (req, res) => {
   const cof_password = req.body.confirm_password;
   const admin = req.body.picked;
 
-  if(!verifyPassword(password))res.redirect('/render_register');
+  if(!verifyPassword(password))return res.redirect('/render_register');
   if (password !== cof_password) {// Check if passwords match
     err = "Passwords do not match"
-    res.redirect('/render_register');
+    return res.redirect('/render_register');
   }
   
 
@@ -173,7 +160,7 @@ router.post("/register", async (req, res) => {
   for (let i = 0; i < data.length; i++) {
     if (data[i].userName == userName) {
       err = "Username already exists"
-      res.redirect('/render_register');
+      return res.redirect('/render_register');
     }
   }
 
