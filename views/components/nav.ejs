@@ -15,7 +15,7 @@
     <div class="menu">
         <ul class="list">
             <li><a href="/"><%= nav1 %></a></li>
-            <%if((pageTitle!="Home"&& pageTitle!="Order") || !token){%>
+            <%if(((pageTitle!="Home"&& pageTitle!="Order") || !token)&&nav2!="0"){%>
                 <li><a href="<%= link %>"><%= nav2 %></a></li>
             <%}%>
         </ul>

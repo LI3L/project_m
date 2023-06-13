@@ -28,8 +28,15 @@
             if(con)document.location.href = '/getorder/'+picks.join(',');
             else alert("you didnt pay");
         }
-        else alert("you didnt peaked a chair");
-        
+        else alert("you didnt peaked a chair");        
+    }
+    function add_chair(){
+        movie.sits++;
+        window.location.reload();
+    }
+    function remove_chair(){
+        movie.sits--;
+        window.location.reload();
     }
     
 
@@ -57,7 +64,13 @@
                             <%}else{%>
                                 <button id="<%=i%>" style="width: 40px; background-Color: grey " onclick="pick('<%=i%>')" value="off"><%=i+1%></button>
                         <%}}%></center>
-                        <center><button style="width: 150px; margin-top: 12px;" onclick="submit()" >Order now!</button></center>
+                        <center>
+                            <button style="width: 150px; margin-top: 12px;" onclick="submit()" >Order now!</button>
+                            <% if(admin){ %>
+                                <a href="/add_char/"+id>add Charis</a>
+                                <a href="/remove_char/"+id>Remove Charis</a>
+                            <% } %>
+                        </center>
                     </div>
                 </div>
             </div>

@@ -169,7 +169,7 @@ router.post("/register", async (req, res) => {
   
 
   // Check if user exists
-  const data = await LogIn.findOne({ where: { userName: userName } });
+  const data = await LogIn.findAll({ where: { userName: userName } });
   for (let i = 0; i < data.length; i++) {
     if (data[i].userName == userName) {
       err = "Username already exists"
@@ -200,7 +200,7 @@ router.post("/register", async (req, res) => {
 
 
 router.get("/order/:id/:user", async (req, res) => {
-  console.log('sahar');
+  console.log(admin+"------------------------------------------");
   const user =await LogIn.findByPk(req.params.user);
   const id = req.params.id;
   movie_id=id;
@@ -222,7 +222,6 @@ router.get("/order/:id/:user", async (req, res) => {
 });
 
 router.get("/getorder/:picks",async(req,res)=>{
-  console.log("liel");
   let picks=req.params.picks;
   const movie = await Movies.findByPk(movie_id);
   console.log(movie);
@@ -240,6 +239,20 @@ router.get("/getorder/:picks",async(req,res)=>{
     res.redirect("/");
   }
 })
+router.post("/add_char/:id",async(req,res)=>{
+  const id = req.params.id;
+    m=await Movies.findByPk(id);
+    s=m.sits+1;
+    m.update({ sits: s})
+    res.redirect("/order/"+id+"/"+user_name);
+})
+router.post("/remove_char/:id", async (req, res) => {
+  const id = req.params.id;
+  m = await Movies.findByPk(id);
+  s = m.sits -1;
+  m.update({ sits: s });
+  res.redirect("/order/" + id + "/" + user_name);
+});
 
 function verifyPassword(password) {
   if (password.length < 8) {
