@@ -65,10 +65,10 @@
                                 <button id="<%=i%>" style="width: 40px; background-Color: grey " onclick="pick('<%=i%>')" value="off"><%=i+1%></button>
                         <%}}%></center>
                         <center>
-                            <button style="width: 150px; margin-top: 12px;" onclick="submit()" >Order now!</button>
+                            <button class="bt" onclick="submit()" >Order now!</button>
                             <% if(admin){ %>
-                                <a href="/add_chair/"+movie.id>add Charis</a>
-                                <a href="/remove_chair/"+movie.id>Remove Charis</a>
+                                <a href="/add_chair/"+movie.id class="bt">add Charis</a>
+                                <a href="/remove_chair/"+movie.id class="bt">Remove Charis</a>
                             <% } %>
                         </center>
                     </div>

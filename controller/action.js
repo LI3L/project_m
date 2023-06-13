@@ -249,7 +249,12 @@ router.get("/remove_chair", async (req, res) => {
   console.log(movie_id+"------------------------------------");
   let m = await Movies.findByPk(movie_id)
   let s = m.sits -1;
-  m.update({ sits: s });
+  let temp = m.taken.split(",");
+  for (let i = 0; i < temp.length; i++){
+    console.log(temp[i]);
+    if(parseInt(temp[i])==m.sits-1) temp = temp.filter((_, index) => index !== i);
+  } 
+  m.update({ sits: s,taken: temp.join(",")});
   res.redirect("/order/" + movie_id + "/" + user_name);
 });
 
