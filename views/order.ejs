@@ -1,24 +1,68 @@
 <%- include("./components/header.ejs") %>
 <%- include("./components/style.ejs") %>
+<script>
+    const picks=['-1'];
+    function pick(id){
+        document.getElementById(id);
+        if(document.getElementById(id).value=="off"){
+            document.getElementById(id).style.backgroundColor = "green";
+            document.getElementById(id).value="on";
+            picks.push(id);
+        }
+        else if(document.getElementById(id).value=="dead"){
+            document.getElementById(id).style.backgroundColor = "red";
+            document.getElementById(id).value="dead";
+        }
+        else if(document.getElementById(id).value=="on"){
+            document.getElementById(id).style.backgroundColor = "grey";
+            document.getElementById(id).value="off";
+            picks.pop(id);
+        }
+        console.log(picks);
+        
+    }
+    function submit(){
+        let con;
+        if(picks.length>1 ){
+            con=window.confirm("The price is "+(picks.length-1)*47+" press ok to continue");
+            if(con)document.location.href = '/getorder/'+picks.join(',');
+            else alert("you didnt pay");
+        }
+        else alert("you didnt peaked a chair");
+        
+    }
+    
+
+</script>
 <body>
     <%- include("./components/nav.ejs") %>
     <div class="container-fluid">
         <div class="row">
-            <div class="movie col-lg-3">
-                <img calss="img" src="<%= movie.image%>">
-                <div class="movie-body">
-                    <h5 class="movie-title"><%= movie.title%></h5>
+            <div style="display: flex; flex-wrap:initial;">
+                <div class="movie col-lg-3">
+                    <img calss="img" src="<%= movie.image%>">
+                    <div class="movie-body"><h5 class="movie-title" style="color:white"><%= movie.title%></h5></div>
                 </div>
-            </div>
-            <div class="dis col-lg-6">
-                <div class="movie-text">
-                    <h5>description:<%= movie.description%></h5>
-                    <h5>ganers:<%= movie.genre%></h5>
+                <div style="display: flex; flex-wrap:wrap; padding-left:10% ">
+                    <div class="dis col-lg-6">
+                        <div class="movie-text">
+                            <h5 style="color:white">description: <%= movie.description%></h5>
+                            <h5 style="color:white">ganers: <%= movie.genre%></h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-7" name="chairs">
+                        <center><%for(let i=0;i<movie.sits;i++){%>
+                            <%if(taken.includes(i.toString())){%>
+                                <button id="<%=i%>" style="width: 40px; background-Color: red " value="dead"><%=i+1%></button>
+                            <%}else{%>
+                                <button id="<%=i%>" style="width: 40px; background-Color: grey " onclick="pick('<%=i%>')" value="off"><%=i+1%></button>
+                        <%}}%></center>
+                        <center><button style="width: 150px; margin-top: 12px;" onclick="submit()" >Order now!</button></center>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-   
     
 
 </body>

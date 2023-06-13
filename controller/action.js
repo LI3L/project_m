@@ -3,6 +3,7 @@ import LogIn from'../moudels/log_in.js';
 import Movies from "../moudels/movies_log.js";
 import fetch from "node-fetch";
 import { render } from "ejs";
+import { where } from "sequelize";
 const router = express.Router();
 
 let token=false;
@@ -10,6 +11,8 @@ let user_name = "null";
 let user_id=0;
 let admin=false;
 let err = false;
+let movie_id=0;
+let taken=[];
 
 const movies1=[{"Title":"Pokemon 4 Ever: Celebi - Voice of the Forest","Year":"2001","Rated":"G","Released":"11 Oct 2002","Runtime":"75 min","Genre":"Animation, Action, Adventure","Director":"Kunihiko Yuyama, Jim Malone","Writer":"Hideki Sonoda, Michael Haigney, Satoshi Tajiri","Actors":"Veronica Taylor, Rica Matsumoto, Rachael Lillis","Plot":"Ash must stop a hunter who forces the mythical Pokémon Celebi to help him destroy a forest.","Language":"Japanese","Country":"Japan","Awards":"N/A","Poster":"https://m.media-amazon.com/images/M/MV5BZDZiYjc3MWYtODE5Mi00MDM5LWFkZTAtNjAzZmUxMzc4ZGQxL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg","Ratings":[{"Source":"Internet Movie Database","Value":"5.7/10"}],"Metascore":"N/A","imdbRating":"5.7","imdbVotes":"8,929","imdbID":"tt0287635","Type":"movie","DVD":"N/A","BoxOffice":"$1,727,447","Production":"N/A","Website":"N/A","Response":"True"}
 ,{"Title":"Ninjago","Year":"2019–2022","Rated":"TV-Y7-FV","Released":"22 Jun 2019","Runtime":"11 min","Genre":"Animation, Action, Adventure","Director":"N/A","Writer":"Tommy Andreasen, Tommy Kalmar, Cerim Manovi","Actors":"Sam Vincent, Michael Adamthwaite, Kelly Metzger","Plot":"While fighting foes across Ninjago City and beyond, the ninja embark on new quests and gain newfound allies as the power of their friendship is tested.","Language":"English, Danish","Country":"Canada, Denmark, United States","Awards":"3 wins & 9 nominations","Poster":"https://m.media-amazon.com/images/M/MV5BYzEyN2QwZjAtNjM2Yy00YWNiLTlkNGQtZjgxMzMxNGMxNzAzXkEyXkFqcGdeQXVyODAzNzI4Njg@._V1_SX300.jpg","Ratings":[{"Source":"Internet Movie Database","Value":"8.0/10"}],"Metascore":"N/A","imdbRating":"8.0","imdbVotes":"1,535","imdbID":"tt10650946","Type":"series","totalSeasons":"4","Response":"True"}
@@ -48,7 +51,7 @@ router.get('/render_Log_in',async(req,res)=>{
 router.get("/", async (req, res) => {
   // for (let i=0;i<movies1.length;i++){
   //   Movies.create({
-  //     //id: i,
+  //     id: i,
   //     title: movies1[i].Title,
   //     genre: movies1[i].Genre,
   //     time: movies1[i].Runtime,
@@ -56,6 +59,8 @@ router.get("/", async (req, res) => {
   //     image: movies1[i].Poster,
   //     description: movies1[i].Plot,
   //     sits: 30,
+  //     taken: '-1,'
+
   //   })
   //     .then((movie) => {
   //       console.log(movie);
@@ -164,7 +169,7 @@ router.post("/register", async (req, res) => {
   
 
   // Check if user exists
-  const data = await LogIn.findAll({ where: { userName: userName } });
+  const data = await LogIn.findOne({ where: { userName: userName } });
   for (let i = 0; i < data.length; i++) {
     if (data[i].userName == userName) {
       err = "Username already exists"
@@ -175,7 +180,7 @@ router.post("/register", async (req, res) => {
   // Create a new user
   err=false;
   user_name = userName;
-  user_id += 1;
+  //user_id += 1;
   LogIn.create({
     id: user_id,
     userName: userName,
@@ -195,14 +200,18 @@ router.post("/register", async (req, res) => {
 
 
 router.get("/order/:id/:user", async (req, res) => {
+  console.log('sahar');
   const user =await LogIn.findByPk(req.params.user);
   const id = req.params.id;
+  movie_id=id;
   const movie= await Movies.findByPk(id);
-  // if (!token)res.redirect("/");//add alert
+  taken=movie.taken.split(',')
   res.render("order", {
+    taken: taken,
     movie: movie,
     id:id,
-    user: user,
+    user:req.params.user,
+    userO: user,
     token: token,
     admin: admin,
     pageTitle: "Order",
@@ -211,6 +220,26 @@ router.get("/order/:id/:user", async (req, res) => {
     link: "0",
   });
 });
+
+router.get("/getorder/:picks",async(req,res)=>{
+  console.log("liel");
+  let picks=req.params.picks;
+  const movie = await Movies.findByPk(movie_id);
+  console.log(movie);
+  picks=picks.split(',');
+  if (picks.length == 1) {
+    res.redirect("/order/" + movie_id + "/" + user_name);
+  } else {
+    let temp=movie.taken;
+    temp+=picks.join(',')+",";
+    console.log(temp);
+    movie.update({
+      taken:temp
+    })
+    
+    res.redirect("/");
+  }
+})
 
 function verifyPassword(password) {
   if (password.length < 8) {

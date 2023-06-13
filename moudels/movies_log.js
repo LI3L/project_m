@@ -36,6 +36,9 @@ const movies = database.define('movies',{
     sits: {
         type: Sequelize.INTEGER,
     },
+    taken:{
+        type: Sequelize.STRING,
+    }
 });
 
 export default movies;
